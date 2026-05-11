@@ -2509,6 +2509,50 @@ switch {
   }
 }
 
+// Dark variants: the PNG check/radio assets are too dim against the panel.
+// Override with CSS-rendered indicators that use theme colors so contrast
+// scales with the rest of the palette.
+@if $variant == 'dark' {
+  check, radio {
+    &:not(menuitem check):not(menuitem radio):not(treeview check):not(treeview radio) {
+      -gtk-icon-source: none;
+      background-image: none;
+      background-color: $base_color;
+      border: 2px solid mix($fg_color, $bg_color, 50%);
+      min-width: 14px;
+      min-height: 14px;
+      padding: 0;
+
+      &:checked {
+        background-color: $selected_bg_color;
+        border-color: $selected_bg_color;
+      }
+      &:disabled { opacity: 0.45; }
+    }
+  }
+  radio:not(menuitem radio):not(treeview radio) {
+    border-radius: 100%;
+    &:checked {
+      background-image: radial-gradient(circle, $selected_fg_color 0 3px, transparent 3px);
+    }
+  }
+  check:not(menuitem check):not(treeview check) {
+    border-radius: 3px;
+    &:checked {
+      background-image: -gtk-icontheme("object-select-symbolic");
+      color: $selected_fg_color;
+    }
+    &:indeterminate {
+      background-color: $selected_bg_color;
+      border-color: $selected_bg_color;
+      background-image: linear-gradient($selected_fg_color, $selected_fg_color);
+      background-size: 8px 2px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
 checkbutton, radiobutton {
     // this is for a nice focus on check and radios text
     &.text-button {

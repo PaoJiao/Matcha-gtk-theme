@@ -1,30 +1,34 @@
 // When color definition differs for dark and light variant,
 // it gets @if ed depending on $variant
 
-$base_color: if($variant =='light', #ffffff, #222b2e);
-$text_color: if($variant == 'light', #303d41, #abb9b6);
+// Dark-variant base colors raised for higher contrast: the original palette
+// kept `base_color` (entries/lists) only ~4 lum units away from `bg_color`
+// (panels), which made inputs vanish on dark. Text/fg colors are also
+// brightened so labels read clearly on the panel.
+$base_color: if($variant =='light', #ffffff, #2c3538);
+$text_color: if($variant == 'light', #303d41, #d4ddda);
 $bg_color: if($variant =='light', #f7f7f7, #1b2224);
-$fg_color: if($variant =='light', #273134, #ccd7d4);
+$fg_color: if($variant =='light', #273134, #e0e9e6);
 
 @if $color=='aliz' {
-  $base_color: if($variant =='light', #ffffff, #262626);
-  $text_color: if($variant == 'light', #363636, #b5abab);
+  $base_color: if($variant =='light', #ffffff, #303030);
+  $text_color: if($variant == 'light', #363636, #e0d8d8);
   $bg_color: if($variant =='light', #f7f7f7, #222222);
-  $fg_color: if($variant =='light', #323232, #cbbfbf);
+  $fg_color: if($variant =='light', #323232, #e8e0e0);
 }
 
 @if $color=='azul' {
-  $base_color: if($variant =='light', #ffffff, #22252c);
-  $text_color: if($variant == 'light', #2e313d, #afb4ba);
+  $base_color: if($variant =='light', #ffffff, #2c303a);
+  $text_color: if($variant == 'light', #2e313d, #d8dde2);
   $bg_color: if($variant =='light', #f7f7f7, #1b1d24);
-  $fg_color: if($variant =='light', #2b2f3b, #bbc3c8);
+  $fg_color: if($variant =='light', #2b2f3b, #dde4e9);
 }
 
 @if $color=='pueril' {
-  $base_color: if($variant =='light', #ffffff, #262626);
-  $text_color: if($variant == 'light', #363636, #bababa);
+  $base_color: if($variant =='light', #ffffff, #303030);
+  $text_color: if($variant == 'light', #363636, #dadada);
   $bg_color: if($variant =='light', #f7f7f7, #222222);
-  $fg_color: if($variant =='light', #323232, #bfbfbf);
+  $fg_color: if($variant =='light', #323232, #dcdcdc);
 }
 
 $selected_fg_color: #ffffff;
@@ -34,9 +38,11 @@ $selected_bg_color: #2eb398;
 @if $color=='pueril' { $selected_bg_color: #97BB72; }
 $alt_selected_bg_color: lighten($selected_bg_color, 6%);
 $selected_borders_color: darken($selected_bg_color, 20%);
-$borders_color: if($variant =='light', rgba(black, 0.15), rgba(black, 0.25));
-$disable_borders_color: if($variant == 'light', rgba(black, 0.08), rgba(black, 0.15));
-$solid_borders_color: if($variant == 'light', darken($bg_color, 15%), darken($bg_color, 3%));
+// On dark, black-tinted borders are invisible — switch to a light tint so
+// entries, buttons and frames have a discernible edge against the panel.
+$borders_color: if($variant =='light', rgba(black, 0.15), rgba(white, 0.18));
+$disable_borders_color: if($variant == 'light', rgba(black, 0.08), rgba(white, 0.10));
+$solid_borders_color: if($variant == 'light', darken($bg_color, 15%), lighten($bg_color, 18%));
 $highlight: if($variant =='light', rgba(white, 0.13), rgba(white, 0.10));
 $focus_border_color: if($variant == 'light', transparentize($selected_bg_color, 0.5), transparentize($selected_bg_color, 0.3));
 $alt_focus_border_color: if($variant == 'light', transparentize(black, 0.7), transparentize(white, 0.7));
@@ -76,8 +82,8 @@ $suggested_fg_color: white;
 $drop_target_color: #F08437;
 
 //insensitive state derived colors
-$insensitive_fg_color: if($variant == 'light', rgba($fg_color, 0.55), rgba($fg_color, 0.45));
-$insensitive_bg_color: if($variant == 'light', mix($bg_color, $base_color, 40%), lighten($bg_color, 2%));
+$insensitive_fg_color: if($variant == 'light', rgba($fg_color, 0.55), rgba($fg_color, 0.55));
+$insensitive_bg_color: if($variant == 'light', mix($bg_color, $base_color, 40%), lighten($bg_color, 4%));
 
 $header_bg: #1b2224;
 @if $header=='light' { $header_bg: #f2f2f2; }
